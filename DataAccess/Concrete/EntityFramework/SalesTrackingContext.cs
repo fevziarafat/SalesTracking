@@ -17,5 +17,6 @@ namespace DataAccess.Concrete.EntityFramework
 
         public DbSet<Dealer> Dealers { get; set; }
         public DbSet<Packet> Packets { get; set; }
+        public DbSet<Status> Status { get; set; }
     }
 }

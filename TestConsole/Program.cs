@@ -10,8 +10,24 @@ namespace TestConsole
         static void Main(string[] args)
         {
             DealerManager dealerManager = new DealerManager(new EfDealerDal());
+            StatusManager statusManager = new StatusManager(new EfStatusDal());
+            //AddStatusAndList(statusManager);
             //AddDealer(dealerManager);
-            ListAllDealer(dealerManager);
+            //ListAllDealer(dealerManager);
+        }
+
+        private static void AddStatusAndList(StatusManager statusManager)
+        {
+            statusManager.Add(new Status
+            {
+                StatusName = "Aktif",
+                StatusExplanation = "Aktifleştirme işlemi yapılmış"
+            });
+            var status = statusManager.GetAll();
+            foreach (var state in status)
+            {
+                Console.WriteLine($"{state.Id}" + " " + $"{state.StatusName}" + " " + $"{state.StatusExplanation}");
+            }
         }
 
         private static void ListAllDealer(DealerManager dealerManager)
