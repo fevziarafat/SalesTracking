@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using Entities.Concrete;
@@ -18,5 +19,6 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<Dealer> Dealers { get; set; }
         public DbSet<Packet> Packets { get; set; }
         public DbSet<Status> Status { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

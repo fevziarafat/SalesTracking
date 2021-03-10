@@ -5,15 +5,16 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Utilities.Results;
 
 namespace Business.Abstract
 {
     public interface IPacketService
     {
-        List<Packet> GetAll();
-        Packet Get(int id);
-        void Add(Packet packet);
-        void Update(Packet packet);
-        void Delete(Packet packet);
+        IDataResult<List<Packet>> GetAll();
+        IDataResult<Packet> Get(int id);
+        IResult Add(Packet packet);
+        IResult Update(Packet packet);
+        IResult Delete(Packet packet);
     }
 }

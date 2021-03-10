@@ -14,16 +14,17 @@ namespace Core.DataAccess.EntityFramework
     where TContext : DbContext, new()
 
     {
-        public List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null)
+        public virtual List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null)
         {
             using (TContext context = new TContext())
             {
-                return filter == null ? context.Set<TEntity>().ToList()
+                var result= filter == null ? context.Set<TEntity>().ToList()
                     : context.Set<TEntity>().Where(filter).ToList();
+                return result;
             }
         }
 
-        public TEntity Get(Expression<Func<TEntity, bool>> filter)
+        public virtual TEntity Get(Expression<Func<TEntity, bool>> filter)
         {
             using (TContext context = new TContext())
             {

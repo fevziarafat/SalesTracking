@@ -4,43 +4,52 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Results;
+using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 
 namespace Business.Concrete
 {
-    public class StatusManager:IStatusService
+    public class StatusManager : IStatusService
     {
-        private EfStatusDal _statusDal;
+        private readonly IStatusDal _statusDal;
 
-        public StatusManager(EfStatusDal statusDal)
+        public StatusManager(IStatusDal statusDal)
         {
             _statusDal = statusDal;
         }
 
-        public List<Status> GetAll()
+        public IDataResult<List<Status>> GetAll()
         {
-            return _statusDal.GetAll();
+            var result = _statusDal.GetAll().ToList();
+            return new SuccessDataResult<List<Status>>(result, "başarılı");
         }
 
-        public Status Get(int id)
+        public IDataResult<Status> Get(int id)
         {
-            return _statusDal.Get(p => p.Id == id);
+            return new SuccessDataResult<Status>(_statusDal.Get(p => p.Id == id));
         }
-
-        public void Add(Status status)
+        [ValidationAspect(typeof(StatusValidator))]
+        public IResult Add(Status status)
         {
             _statusDal.Add(status);
+            return new SuccessResult();
         }
 
-        public void Update(Status status)
+        public IResult Update(Status status)
         {
             _statusDal.Update(status);
+            return new SuccessResult();
         }
 
-        public void Delete(Status status)
+        public IResult Delete(Status status)
         {
-           _statusDal.Delete(status);
+            _statusDal.Delete(status);
+            return new SuccessResult();
         }
     }
 }
