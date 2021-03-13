@@ -33,6 +33,7 @@ namespace WebApi
         {
 
             services.AddControllers();
+            services.AddCors();
             //services.AddSingleton<IDealerService, DealerManager>();
             //services.AddSingleton<IDealerDal, EfDealerDal>();
 
@@ -64,6 +65,7 @@ namespace WebApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1"));
             }
 
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
             app.UseHttpsRedirection();
 
             app.UseRouting();
